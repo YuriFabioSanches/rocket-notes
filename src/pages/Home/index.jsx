@@ -3,6 +3,8 @@ import { Container, Brand, Menu, Search, Content, NewNote } from "./styles"
 import { Header } from "../../components/Header"
 import { ButtonText } from "../../components/ButtonText"
 import { Input } from "../../components/Input"
+import { Section } from "../../components/Section"
+import { Note } from "../../components/Note"
 
 export function Home() {
   return(
@@ -25,6 +27,20 @@ export function Home() {
       </Search>
 
       <Content>
+        <Section title= "Minhas Notas">
+          <Note 
+          data= {
+            { title: "React Modal",
+              tags: [{id: 1, name: "React"}]
+            }
+          } />
+          <Note 
+          data= {
+            { title: "Exemplo de Middleware",
+              tags: [{id: 2, name: "Express"}, {id: 3, name: "Nodejs"}]
+            }
+          } />
+        </Section>
 
       </Content>
 

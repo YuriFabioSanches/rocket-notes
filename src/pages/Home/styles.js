@@ -46,13 +46,15 @@ export const Menu = styled.ul`
 
 export const Search = styled.div`
   grid-area: search;
-  background-color: ${({ theme }) => theme.COLORS.BACKGROUND_700};
+  background-color: ${({ theme }) => theme.COLORS.BACKGROUND_800};
   padding: 6.4rem 6.4rem .8rem 6.4rem;
 `;
 
 export const Content = styled.div`
   grid-area: content;
-  background-color: green;
+  background-color: ${({ theme }) => theme.COLORS.BACKGROUND_800};
+  padding: 3.6rem 6.4rem 0;
+  overflow-y: auto;
 `;
 
 export const NewNote= styled.button`
