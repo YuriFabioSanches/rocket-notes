@@ -19,6 +19,17 @@ export const Form = styled.form`
     margin-top: 12.4rem;
     color: ${({ theme }) => theme.COLORS.ORANGE};
   }
+
+  animation: appear .5s ease-out;
+
+  @keyframes appear {
+    to{
+      transform: scale(1);
+    }
+    from{
+      transform: scale(0);
+    }
+  }
 `;
 
 export const Title = styled.div`
