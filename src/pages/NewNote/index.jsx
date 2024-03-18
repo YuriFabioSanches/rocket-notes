@@ -1,7 +1,8 @@
 import { Header } from "../../components/Header"
 import { Input } from "../../components/Input"
+import { Textarea } from "../../components/Textarea"
 
-import { Container, Form } from "./styles"
+import { Container, Form, NoteInfo } from "./styles"
 
 export function NewNote() {
   return(
@@ -15,7 +16,11 @@ export function NewNote() {
             <a href="/">Voltar</a>
           </header>
 
-          <Input placeholder="Título" />
+          <NoteInfo>
+            <Input placeholder="Título" />
+            <Textarea placeholder="Observações" />
+          </NoteInfo>
+
         </Form>
       </main>
     </Container>

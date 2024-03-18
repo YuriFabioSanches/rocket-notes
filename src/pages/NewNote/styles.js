@@ -25,5 +25,11 @@ export const Form = styled.form`
       color: ${({ theme }) => theme.COLORS.GRAY_100};
     }
   }
+`;
+
+export const NoteInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
 
 `;
