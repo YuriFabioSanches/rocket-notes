@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 
 export function Input({ icon: Icon, labelId,  ...rest }) {
   Input.propTypes = {
-    icon: PropTypes.element,
-    labelId: PropTypes.string
+    icon:   PropTypes.func,
+    labelId: PropTypes.string,
   }
 
   return(
