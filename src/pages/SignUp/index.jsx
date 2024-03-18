@@ -21,9 +21,9 @@ export function SignUp() {
         </LoginTitle>
 
         <InputsWrapper>
-          <Input placeholder="Nome" type="text" icon={FiUser} />
-          <Input placeholder="E-mail" type="email" icon={FiMail} />
-          <Input placeholder="Password" type="password" icon={FiLock} />
+          <Input placeholder="Nome" type="text" labelId="name" icon={FiUser} />
+          <Input placeholder="E-mail" type="email" labelId="email" icon={FiMail} />
+          <Input placeholder="Password" type="password" labelId="password" icon={FiLock} />
         </InputsWrapper>
 
         <Button title="Cadastrar" />

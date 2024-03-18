@@ -23,9 +23,13 @@ export const Container = styled.div`
     }
  }
 
- > svg {
-    margin-left: 1.6rem;
-    font-size: 2rem;
-  }
+ > label {
+    svg {
+      margin-left: 1.6rem;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+ }
+
 
 `;

@@ -1,15 +1,18 @@
 import { Container } from "./styles";
 import PropTypes from 'prop-types'
 
-export function Input({ icon: Icon, ...rest }) {
+export function Input({ icon: Icon, labelId,  ...rest }) {
   Input.propTypes = {
-    icon: PropTypes.element
+    icon: PropTypes.element,
+    labelId: PropTypes.string
   }
 
   return(
     <Container>
-      {Icon && <Icon />}
-      <input {...rest} />
+      <label htmlFor={labelId}>
+        {Icon && <Icon />}
+      </label>
+      <input id={labelId} {...rest} />
     </Container>
   );
 }

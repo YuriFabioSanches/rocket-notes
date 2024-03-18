@@ -25,10 +25,10 @@ export function Profile() {
         </Avatar>
 
         <InputsWrapper>
-          <Input placeholder="Nome" type="text" icon={FiUser} />
-          <Input placeholder="E-mail" type="email" icon={FiMail} />
-          <Input placeholder="Senha atual" type="password" icon={FiLock} />
-          <Input placeholder="Nova senha" type="password" icon={FiLock} />
+          <Input placeholder="Nome" type="text" labelId="name" icon={FiUser} />
+          <Input placeholder="E-mail" type="email" labelId="email" icon={FiMail} />
+          <Input placeholder="Senha atual" type="password" labelId="password" icon={FiLock} />
+          <Input placeholder="Nova senha" type="password" labelId="newPassword" icon={FiLock} />
         </InputsWrapper>
 
         <Button title="Salvar" />

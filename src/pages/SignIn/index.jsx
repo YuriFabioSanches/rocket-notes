@@ -19,8 +19,8 @@ export function SignIn() {
         </LoginTitle>
 
         <InputsWrapper>
-          <Input placeholder="E-mail" type="email" icon={FiMail} />
-          <Input placeholder="Password" type="password" icon={FiLock} />
+          <Input placeholder="E-mail" type="email" labelId="email" icon={FiMail} />
+          <Input placeholder="Password" type="password" labelId="password" icon={FiLock} />
         </InputsWrapper>
 
         <Button title="Entrar" />
