@@ -5,9 +5,13 @@ import { FiMail, FiLock } from "react-icons/fi"
 import { Input } from "../../components/Input"
 import { Button } from "../../components/Button"
 
+import { useAuth } from '../../hooks/authHooks/useAuth.js'
+
 import { Container, Form, Title, LoginTitle, InputsWrapper, BackgroundImg } from "./styles"
 
 export function SignIn() {
+  const value = useAuth()
+  console.log(value)
   return(
     <Container>
       <Form>
