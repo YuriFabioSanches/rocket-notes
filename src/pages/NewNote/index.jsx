@@ -5,8 +5,10 @@ import { Section } from "../../components/Section"
 import { Header } from "../../components/Header"
 import { Button } from "../../components/Button"
 import { Input } from "../../components/Input"
+import { ButtonText } from "../../components/ButtonText"
 
-import { Link, useNavigate } from 'react-router-dom'
+
+import { useNavigate } from 'react-router-dom'
 
 import { useState } from "react"
 
@@ -23,6 +25,10 @@ export function NewNote() {
   const [newTag, setNewTag] = useState("")
 
   const navigate = useNavigate()
+
+  function handleBack() {
+    navigate(-1)
+  }
 
   function handleAddLinks() {
     if(newLink != "") {
@@ -63,7 +69,7 @@ export function NewNote() {
 
     alert("Nota criada com sucesso!")
     
-    navigate("/")
+    navigate(-1)
   }
 
   return(
@@ -74,7 +80,10 @@ export function NewNote() {
         <Form>
           <header>
             <h1>Crair nota</h1>
-            <Link to="/">Voltar</Link>
+            <ButtonText 
+              title="Voltar" 
+              onClick={handleBack}
+            />
           </header>
 
           <NoteInfo>
@@ -111,21 +120,23 @@ export function NewNote() {
                 <NoteItem 
                   key={index}
                   value={tag}
-                  onClick={() => handleRemoveTag(index)} />
+                  onClick={() => handleRemoveTag(index)} 
+                />
               ))}
               <NoteItem 
                 isNew 
                 placeholder="Novo marcador"
                 value={newTag}
                 onChange={e => setNewTag(e.target.value)}
-                onClick={handleAddTags} />
+                onClick={handleAddTags} 
+              />
             </div>
           </Section>
 
           <Button 
             title="Salvar"
-            onClick={handleNewNote} />
-
+            onClick={handleNewNote}
+          />
         </Form>
       </main>
     </Container>

@@ -1,56 +1,102 @@
 import { Container, Links, Tags, Content } from "./styles"
-import { Header } from "../../components/Header"
 import { ButtonText } from "../../components/ButtonText"
 import { Section } from "../../components/Section"
-import { Tag } from "../../components/Tag"
 import { Button } from "../../components/Button"
+import { Header } from "../../components/Header"
+import { Tag } from "../../components/Tag"
+
+import { api } from "../../services/api"
+import { useState, useEffect } from "react"
+import { useParams, useNavigate } from "react-router-dom"
 
 export function Details() {
+  const [data, setData] = useState(null)
+  const params = useParams()
+  const navigate = useNavigate()
+
+  function handleBack() {
+    navigate(-1)
+  }
+
+  async function hadleDeleteNote() {
+    const confirm = window.confirm("Deseja excluir a nota?")
+
+    if(confirm){
+      await api.delete(`/notes/${params.id}`)
+      navigate(-1)
+    }
+  }
+
+  useEffect(() => {
+    async function handleNote(){
+      const response = await api.get(`/notes/${params.id}`)
+      setData(response.data)
+    }
+
+    handleNote()
+  }, [params.id])
+
   return (
     <Container>
       <Header />
-      <main>
-        <Content>
-          <ButtonText title="Excluir nota" />
+      {
+        data &&
+        <main>
+          <Content>
+            <ButtonText 
+              title="Excluir nota"
+              onClick={hadleDeleteNote}
+            />
 
-          <h1>Introdução ao React</h1>
+            <h1>{data.title}</h1>
 
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Error iste, 
-            qui sequi repudiandae voluptatum corporis. Ducimus a iusto quod hic rem 
-            provident cum eligendi sit placeat maiores? Fugit, tempora sunt?
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Error iste, 
-            qui sequi repudiandae voluptatum corporis. Ducimus a iusto quod hic rem 
-            provident cum eligendi sit placeat maiores? Fugit, tempora sunt?
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Error iste, 
-            qui sequi repudiandae voluptatum corporis. Ducimus a iusto quod hic rem 
-            provident cum eligendi sit placeat maiores? Fugit, tempora sunt?
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Error iste, 
-            qui sequi repudiandae voluptatum corporis. Ducimus a iusto quod hic rem 
-            provident cum eligendi sit placeat maiores? Fugit, tempora sunt?
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Error iste, 
-            qui sequi repudiandae voluptatum corporis. Ducimus a iusto quod hic rem 
-            provident cum eligendi sit placeat maiores? Fugit, tempora sunt?
-          </p>
+            <p>
+              {data.description}
+            </p>
 
-          <Section title="Links úteis">
-            <Links>
-              <li><a href="#"></a>https://www.rocketseat.com.br/</li>
-              <li><a href="#"></a>https://www.rocketseat.com.br/</li>
-              <li><a href="#"></a>https://www.rocketseat.com.br/</li>
-            </Links>
-          </Section>
+            {
+              data.links &&
+              <Section title="Links úteis">
+                <Links>
+                  {
+                    data.links.map(link => (
+                      <li key={link.id}>
+                        <a href={link.url} target="_blank">
+                          {link.url}
+                        </a>
+                      </li>
+                    ))
+                  }
+                </Links>
+              </Section>
 
-          <Section title="Marcadores">
-            <Tags>
-              <li><Tag title="express" /></li>
-              <li><Tag title="reactjs" /></li>
-              <li><Tag title="javascript" /></li>
-            </Tags>
-          </Section>
-          <Button title="Voltar" />
-        </Content>
-      </main>
+            }
+
+            {
+              data.tags &&
+              <Section title="Marcadores">
+              <Tags>
+                {
+                  data.tags.map(tag => (
+                    <li key={tag.id}>
+                      <Tag 
+                        title={tag.name}
+                      />
+                    </li>
+                  ))
+                }
+              </Tags>
+            </Section>
+            }
+
+            <Button 
+              title="Voltar"
+              onClick={handleBack}
+            />
+          </Content>
+        </main>
+      }
+
     </Container>
   )
 }

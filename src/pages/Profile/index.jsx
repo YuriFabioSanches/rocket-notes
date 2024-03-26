@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { FiUser, FiMail, FiLock, FiArrowLeft, FiCamera } from "react-icons/fi"
 import { Container, Form, InputsWrapper, Avatar } from "./styles"
 import { Input } from "../../components/Input"
@@ -20,16 +20,23 @@ export function Profile() {
   const [avatar, setAvatar] = useState(avatarURL)
   const [avatarFile, setAvatarFile] = useState(null)
 
+  const navigate = useNavigate()
+
+  function handleBack() {
+    navigate(-1)
+  }
 
   async function handleUpdate() {
-    const user = {
+    const updated = {
       name,
       email,
       password: passwordNew,
       old_password: passwordOld
     }
 
-    await updateProfile({ user, avatarFile })
+    const userUpdate = Object.assign(user, updated)
+
+    await updateProfile({ user: userUpdate, avatarFile })
 
     setPasswordOld("")
     setPasswordNew("")
@@ -46,9 +53,9 @@ export function Profile() {
   return(
     <Container>
       <header>
-        <Link to="/">
+        <button type='button' onClick={handleBack}>
           <FiArrowLeft />
-        </Link>
+        </button>
       </header>
 
       <Form>
