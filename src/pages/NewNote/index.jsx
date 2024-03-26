@@ -1,15 +1,71 @@
-import { Header } from "../../components/Header"
-import { Input } from "../../components/Input"
-import { Textarea } from "../../components/Textarea"
-import { Section } from "../../components/Section"
-import { NoteItem } from "../../components/NoteItem"
-import { Button } from "../../components/Button"
-
-import { Link } from 'react-router-dom'
-
 import { Container, Form, NoteInfo } from "./styles"
+import { Textarea } from "../../components/Textarea"
+import { NoteItem } from "../../components/NoteItem"
+import { Section } from "../../components/Section"
+import { Header } from "../../components/Header"
+import { Button } from "../../components/Button"
+import { Input } from "../../components/Input"
+
+import { Link, useNavigate } from 'react-router-dom'
+
+import { useState } from "react"
+
+import { api } from "../../services/api"
 
 export function NewNote() {
+  const [title, setTitle] = useState("")
+  const [description, setDescription] = useState("")
+
+  const [links, setLinks] = useState([])
+  const [newLink, setNewLink] = useState("")
+
+  const [tags, setTags] = useState([])
+  const [newTag, setNewTag] = useState("")
+
+  const navigate = useNavigate()
+
+  function handleAddLinks() {
+    if(newLink != "") {
+      setLinks(prevState => [...prevState, newLink])
+      setNewLink("")
+    }
+  }
+
+  function handleRemoveLink(linkIndex) {
+    setLinks(prevState => prevState.filter((_, index) => index !== linkIndex))
+  }
+
+  function handleAddTags(){
+    if(newTag != "") {
+      setTags(prevState => [...prevState, newTag])
+      setNewTag("")
+    }
+  }
+
+  function handleRemoveTag(tagIndex) {
+    setTags(prevState => prevState.filter((_, index) => index !== tagIndex))
+  }
+
+  async function handleNewNote(){
+    if(!title){
+      return alert("Digite o título da nota.")
+    }
+
+    if(newLink){
+      return alert("Você inseriu um link no campo, mas não adicionou.")
+    }
+
+    if(newTag){
+      return alert("Você inseriu uma tag no campo, mas não adicionou.")
+    }
+
+    await api.post("/notes", {title, description, tags, links})
+
+    alert("Nota criada com sucesso!")
+    
+    navigate("/")
+  }
+
   return(
     <Container>
       <Header />
@@ -22,29 +78,53 @@ export function NewNote() {
           </header>
 
           <NoteInfo>
-            <Input placeholder="Título" />
-            <Textarea placeholder="Observações" />
+            <Input 
+              placeholder="Título"
+              onChange={e => setTitle(e.target.value)}
+            />
+            <Textarea 
+              placeholder="Observações"
+              onChange={e => setDescription(e.target.value)}
+            />
           </NoteInfo>
 
           <Section title="Links úteis">
-            <NoteItem value="https://github.com" />
-            <NoteItem isNew placeholder="Novo link" />
+            {links.map((link, index) => (
+              <NoteItem
+              key={index}
+              value={link}
+              onClick={() => handleRemoveLink(index)}
+            />
+            ))}
+            <NoteItem 
+              isNew  
+              placeholder="Novo link"
+              value={newLink}
+              onChange={e => setNewLink(e.target.value)}
+              onClick={handleAddLinks}
+            />
           </Section>
 
           <Section title="Marcadores">
             <div className="tags">
-              <NoteItem value="React" />
-              <NoteItem isNew placeholder="Novo marcador" />
-              <NoteItem value="React" />
-              <NoteItem isNew placeholder="Novo marcador" />
-              <NoteItem value="React" />
-              <NoteItem isNew placeholder="Novo marcador" />
-              <NoteItem value="React" />
-              <NoteItem isNew placeholder="Novo marcador" />
+              {tags.map((tag, index) => (
+                <NoteItem 
+                  key={index}
+                  value={tag}
+                  onClick={() => handleRemoveTag(index)} />
+              ))}
+              <NoteItem 
+                isNew 
+                placeholder="Novo marcador"
+                value={newTag}
+                onChange={e => setNewTag(e.target.value)}
+                onClick={handleAddTags} />
             </div>
           </Section>
 
-          <Button title="Salvar" />
+          <Button 
+            title="Salvar"
+            onClick={handleNewNote} />
 
         </Form>
       </main>
